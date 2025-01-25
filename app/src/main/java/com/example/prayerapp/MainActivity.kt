@@ -1,5 +1,11 @@
 package com.example.prayerapp
-
+//
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+import kotlin.math.cos
+import kotlin.math.sin
+//
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,12 +45,68 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    myScreen()
+                    MyScreen()
                 }
             }
         }
     }
 }
+
+@Composable
+fun AnnotatedCircle(
+    modifier: Modifier = Modifier,
+    annotationAngles: List<Float> = emptyList(),
+    circleColor: Color = Color(167, 194, 241),
+    dotColor: Color = Color.Blue
+) {
+    Canvas(modifier = modifier) {
+        // Get canvas dimensions
+        val centerX = size.width / 2f
+        val centerY = size.height / 2f
+        val radius = minOf(centerX, centerY)
+
+        // Draw the circle
+        drawCircle(
+            color = circleColor,
+            center = Offset(centerX, centerY),
+            radius = radius,
+            style = Stroke(width = 55f)
+        )
+
+        // Draw the annotation dots
+        annotationAngles.forEach { angle ->
+            val x = centerX + radius * cos(Math.toRadians(angle.toDouble())).toFloat()
+            val y = centerY + radius * sin(Math.toRadians(angle.toDouble())).toFloat()
+
+            drawCircle(
+                color = dotColor,
+                radius = 10f,
+                center = Offset(x, y)
+            )
+        }
+    }
+}
+
+
+
+@Composable
+fun MyScreen(){
+    val backgroundColor = Color(241, 216, 167)
+    Column(
+        modifier = Modifier
+            .background(backgroundColor)
+            .fillMaxSize()
+            .padding(50.dp, 1.dp),
+        horizontalAlignment  = (Alignment.CenterHorizontally)
+    ){
+        AnnotatedCircle( modifier = Modifier.size(400.dp))
+        Spacer(modifier = Modifier.size(16.dp))
+        MyBox1()
+        Spacer(modifier = Modifier.size(16.dp))
+        MyBox2()
+    }
+}
+
 
 @Composable
 fun MyBox1(){
@@ -67,33 +129,6 @@ fun MyBox2(){
     )
 }
 
-@Composable
-fun MyBox3(){
-    val customColor = Color(111, 76, 181)
-    Box(
-        modifier = Modifier
-            .size(180.dp)
-            .background(customColor)
-    )
-}
-
-@Composable
-fun myScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(50.dp),
-        horizontalAlignment  = (Alignment.CenterHorizontally)
-    ){
-        Greeting("Yaqub")
-        MyBox1()
-        Spacer(modifier = Modifier.size(16.dp))
-        MyBox2()
-        Spacer(modifier = Modifier.size(16.dp))
-        MyBox3()
-    }
-    }
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -110,6 +145,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     PrayerAppTheme {
-        myScreen()
+        MyScreen()
     }
 }
