@@ -9,6 +9,7 @@ import kotlin.math.sin
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 
 import androidx.compose.foundation.layout.Box
@@ -20,15 +21,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -56,7 +65,7 @@ class MainActivity : ComponentActivity() {
 fun AnnotatedCircle(
     modifier: Modifier = Modifier,
     annotationAngles: List<Float> = emptyList(),
-    circleColor: Color = Color(167, 194, 241),
+    circleColor: Color = Color(85, 175, 85, 255),
     dotColor: Color = Color.Blue
 ) {
     Canvas(modifier = modifier) {
@@ -90,7 +99,7 @@ fun AnnotatedCircle(
 
 @Composable
 fun MyScreen(){
-    val backgroundColor = Color(241, 216, 167)
+    val backgroundColor = Color(16, 17, 17 )
     Column(
         modifier = Modifier
             .background(backgroundColor)
@@ -106,26 +115,88 @@ fun MyScreen(){
     }
 }
 
+@Composable
+fun LondonImage(){}
+
 
 @Composable
 fun MyBox1(){
-    val customColor = Color(68, 89, 63)
+    val customColor = Color(252, 187, 90, 255)
+    val customWhite = Color(255, 122, 125, 255)
     Box(
         modifier = Modifier
-            .size(180.dp)
-            .background(customColor)
-    )
+            .width(260.dp)
+            .height(150.dp)
+            .clip(RoundedCornerShape(30.dp))
+
+
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.londonimage),
+            contentDescription = "London Dhur Image",
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(30.dp)))
+
+
+        Text(text = "Dhur:12:18",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp,2.dp)
+        )
+
+        Text(text = "Dhur:12:18",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = customWhite,
+            modifier = Modifier.fillMaxWidth())
+    }
 }
 
 
 @Composable
 fun MyBox2(){
-    val customColor = Color(34, 119, 153)
+    val customColor = Color(27, 69, 27, 255)
+    val customWhite = Color(255, 122, 125, 255)
     Box(
         modifier = Modifier
-            .size(180.dp)
+            .width(260.dp)
+            .height(150.dp)
+            .clip(RoundedCornerShape(30.dp))
             .background(customColor)
-    )
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.londonasrimage),
+            contentDescription = "London Asr Image",
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(30.dp)))
+
+
+
+        Text(text = "Asr:14:15",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp,2.dp)
+        )
+
+        Text(text = "Asr:14:15",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = customWhite,
+            modifier = Modifier.fillMaxWidth())
+
+
+
+    }
 }
 
 
