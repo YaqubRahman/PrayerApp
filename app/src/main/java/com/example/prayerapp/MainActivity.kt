@@ -1,14 +1,15 @@
 package com.example.prayerapp
-//
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlin.math.cos
 import kotlin.math.sin
-//
+import androidx.activity.viewModels
+import androidx.activity.compose.setContent
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.sp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 
@@ -26,40 +27,32 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 
-
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.example.prayerapp.ui.theme.PrayerAppTheme
 
+
 class MainActivity : ComponentActivity() {
+
+    private val prayerViewModel: PrayerViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             PrayerAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MyScreen()
-                }
+                // Display loading/error or prayer times
+                MyScreen()
             }
         }
     }
 }
+
+
 
 @Composable
 fun AnnotatedCircle(
@@ -98,16 +91,17 @@ fun AnnotatedCircle(
 
 
 @Composable
-fun MyScreen(){
-    val backgroundColor = Color(16, 17, 17 )
+fun MyScreen() {
+    val backgroundColor = Color(16, 17, 17)
+
     Column(
         modifier = Modifier
             .background(backgroundColor)
             .fillMaxSize()
             .padding(50.dp, 1.dp),
-        horizontalAlignment  = (Alignment.CenterHorizontally)
-    ){
-        AnnotatedCircle( modifier = Modifier.size(400.dp))
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AnnotatedCircle(modifier = Modifier.size(400.dp))
         Spacer(modifier = Modifier.size(16.dp))
         MyBox1()
         Spacer(modifier = Modifier.size(16.dp))
@@ -116,12 +110,7 @@ fun MyScreen(){
 }
 
 @Composable
-fun LondonImage(){}
-
-
-@Composable
 fun MyBox1(){
-    val customColor = Color(252, 187, 90, 255)
     val customWhite = Color(255, 122, 125, 255)
     Box(
         modifier = Modifier
@@ -196,25 +185,5 @@ fun MyBox2(){
 
 
 
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        fontSize = 44.sp
-
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PrayerAppTheme {
-        MyScreen()
     }
 }
