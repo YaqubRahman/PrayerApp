@@ -6,9 +6,18 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlin.math.cos
 import kotlin.math.sin
 //
+//
+import androidx.activity.viewModels
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.unit.sp
+//
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 
@@ -43,24 +52,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.prayerapp.ui.theme.PrayerAppTheme
 
+
 class MainActivity : ComponentActivity() {
+
+    private val prayerViewModel: PrayerViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             PrayerAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MyScreen()
-                }
+                val prayerTimes = prayerViewModel.prayerTimes.collectAsState()
+
+                // Display the UI with the fetched prayer times
+                MyScreen(prayerTimes.value)
             }
         }
     }
 }
-
 
 @Composable
 fun AnnotatedCircle(
@@ -99,7 +107,7 @@ fun AnnotatedCircle(
 
 
 @Composable
-fun MyScreen(){
+fun MyScreen(prayerTimes: PrayerApiResponse?){
     val backgroundColor = Color(16, 17, 17 )
     Column(
         modifier = Modifier
@@ -113,6 +121,17 @@ fun MyScreen(){
         MyBox1()
         Spacer(modifier = Modifier.size(16.dp))
         MyBox2()
+        if (prayerTimes != null) {
+            // Display prayer times
+            Text(text = "Fajr: ${prayerTimes.data.timings.Fajr}", fontSize = 20.sp)
+            Text(text = "Dhuhr: ${prayerTimes.data.timings.Dhuhr}", fontSize = 20.sp)
+            Text(text = "Asr: ${prayerTimes.data.timings.Asr}", fontSize = 20.sp)
+            Text(text = "Maghrib: ${prayerTimes.data.timings.Maghrib}", fontSize = 20.sp)
+            Text(text = "Isha: ${prayerTimes.data.timings.Isha}", fontSize = 20.sp)
+        } else {
+            // Display loading/error message
+            Text(text = "Loading prayer times...", fontSize = 20.sp, color = Color.White)
+        }
     }
 }
 
@@ -210,12 +229,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         fontSize = 44.sp
 
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PrayerAppTheme {
-        MyScreen()
-    }
 }

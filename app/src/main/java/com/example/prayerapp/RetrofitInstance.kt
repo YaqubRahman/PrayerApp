@@ -3,8 +3,8 @@ package com.example.prayerapp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object (RetrofitInstance) {
-    private const val BASE_URL = "https://api.aladhan.com/"
+object RetrofitInstance {
+    private const val BASE_URL = "https://api.aladhan.com/v1"
 
     val api: PrayerApiService by lazy {
         Retrofit.Builder()
