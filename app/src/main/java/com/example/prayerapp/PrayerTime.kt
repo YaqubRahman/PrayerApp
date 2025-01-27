@@ -4,6 +4,7 @@ data class PrayerApiResponse(
     val code: Int,
     val status: String,
     val data: PrayerData
+    
 )
 
 data class PrayerData(
