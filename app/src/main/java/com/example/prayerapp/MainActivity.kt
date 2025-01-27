@@ -4,11 +4,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlin.math.cos
 import kotlin.math.sin
-import androidx.activity.viewModels
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.sp
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,11 +35,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.example.prayerapp.ui.theme.PrayerAppTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-
+private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
 
-    private val prayerViewModel: PrayerViewModel by viewModels()
+    fun getData() {
+        val client = PostClient().getApi().build().create(PrayerApiService::class.java)
+        client.getPosts().enqueue(object: Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+
+                val posts = response.body()
+                posts?.let {
+                    for (post in posts) {
+                        Log.d(TAG, "onresponse: ${post.title}")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +70,7 @@ class MainActivity : ComponentActivity() {
                 MyScreen()
             }
         }
+        getData()
     }
 }
 
@@ -135,7 +157,7 @@ fun MyBox1(){
             color = Color.Black,
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(0.dp,2.dp)
+                .offset(0.dp, 2.dp)
         )
 
         Text(text = "Dhur:12:18",
@@ -174,7 +196,7 @@ fun MyBox2(){
             color = Color.Black,
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(0.dp,2.dp)
+                .offset(0.dp, 2.dp)
         )
 
         Text(text = "Asr:14:15",

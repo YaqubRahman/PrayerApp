@@ -1,8 +1,11 @@
 package com.example.prayerapp
 
+import retrofit2.Call
 import retrofit2.http.GET
 
+// const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+// const val = "posts"
 interface PrayerApiService {
-    @GET("timings/2025-01-26")
-    suspend fun getPrayerTimes(): PrayerApiResponse
+    @GET("posts")
+    fun getPosts(): Call<List<Post>>
 }

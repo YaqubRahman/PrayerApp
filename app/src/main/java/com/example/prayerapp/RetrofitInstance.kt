@@ -3,14 +3,10 @@ package com.example.prayerapp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
-    private const val BASE_URL = "https://api.aladhan.com/v1/"
-
-    val api: PrayerApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
+class PostClient {
+    fun getApi(): Retrofit.Builder {
+        return Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(PrayerApiService::class.java)
     }
 }
+
