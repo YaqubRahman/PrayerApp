@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d(TAG, "failed")
             }
 
         })
