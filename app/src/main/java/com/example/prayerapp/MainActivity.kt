@@ -28,9 +28,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -115,11 +118,12 @@ fun AnnotatedCircle(
 @Composable
 fun MyScreen() {
     val backgroundColor = Color(16, 17, 17)
-
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .background(backgroundColor)
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .padding(50.dp, 1.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -128,6 +132,10 @@ fun MyScreen() {
         MyBox1()
         Spacer(modifier = Modifier.size(16.dp))
         MyBox2()
+        Spacer(modifier = Modifier.size(16.dp))
+        MyBox3()
+        Spacer(modifier = Modifier.size(16.dp))
+        MyBox4()
     }
 }
 
@@ -200,6 +208,90 @@ fun MyBox2(){
         )
 
         Text(text = "Asr:14:15",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = customWhite,
+            modifier = Modifier.fillMaxWidth())
+
+
+
+    }
+}
+
+@Composable
+fun MyBox3(){
+    val customColor = Color(27, 69, 27, 255)
+    val customWhite = Color(255, 122, 125, 255)
+    Box(
+        modifier = Modifier
+            .width(260.dp)
+            .height(150.dp)
+            .clip(RoundedCornerShape(30.dp))
+            .background(customColor)
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.londonmaghribimage),
+            contentDescription = "London Maghrib Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(30.dp)))
+
+
+
+        Text(text = "Maghrib:16:43",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp, 2.dp)
+        )
+
+        Text(text = "Maghrib:16:43",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = customWhite,
+            modifier = Modifier.fillMaxWidth())
+
+
+
+    }
+}
+
+@Composable
+fun MyBox4(){
+    val customColor = Color(27, 69, 27, 255)
+    val customWhite = Color(255, 122, 125, 255)
+    Box(
+        modifier = Modifier
+            .width(260.dp)
+            .height(150.dp)
+            .clip(RoundedCornerShape(30.dp))
+            .background(customColor)
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.londonishaimage),
+            contentDescription = "London Isha Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(30.dp)))
+
+
+
+        Text(text = "Isha:18:20",
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp, 2.dp)
+        )
+
+        Text(text = "Isha:18:20",
             fontSize = 30.sp,
             textAlign = TextAlign.Center,
             color = customWhite,
