@@ -28,7 +28,7 @@ data class Timings(
 
 data class Date(
     val readable: String,
-    val timestamp: Long,
+    val timestamp: String,
     val hijri: HijriDate,
     val gregorian: GregorianDate
 )

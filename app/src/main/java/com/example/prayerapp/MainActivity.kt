@@ -43,20 +43,18 @@ private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
 
     fun getData() {
-        val client = PostClient().getApi().build().create(PrayerApiService::class.java)
-        client.getPosts().enqueue(object: Callback<List<Post>> {
-            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+        val client = SalahClient().getApi().build().create(PrayerApiService::class.java)
+        client.getSalah().enqueue(object: Callback<PrayerApiResponse> {
+            override fun onResponse(call: Call<PrayerApiResponse>, response: Response<PrayerApiResponse>) {
 
-                val posts = response.body()
-                posts?.let {
-                    for (post in posts) {
-                        Log.d(TAG, "onresponse: ${post.title}")
-                    }
+                response?.let {
+                    Log.d(TAG, "response: ${response}")
                 }
             }
 
-            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-                TODO("Not yet implemented")
+            override fun onFailure(call: Call<PrayerApiResponse>, t: Throwable) {
+                Log.d(TAG, "faield", t)
+                Log.d(TAG, "Raw Response: ${t}")
             }
 
         })
