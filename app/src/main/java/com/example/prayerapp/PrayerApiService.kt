@@ -6,6 +6,8 @@ import retrofit2.http.GET
 // const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 // const val = "posts" GET /timings/27-01-2025
 interface PrayerApiService {
-    @GET("timingsByAddress/01-01-2025?address=Trafalgar+Square%2C+London%2C+UK&x7xapikey=P244d623e2fe2daf56359fGyK3s&method=3&shafaq=general&tune=5%2C3%2C5%2C7%2C9%2C-1%2C0%2C8%2C-6&timezonestring=UTC&calendarMethod=UAQ")
+    @GET("times/?format=json&key=4498bab9-2013-4567-a401-58ff5427a02e&year=2025&month=july&24hours=true")
     fun getSalah(): Call<PrayerApiResponse>
 }
+
+

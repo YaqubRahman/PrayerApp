@@ -1,4 +1,5 @@
 package com.example.prayerapp
+import android.os.Build
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -10,6 +11,7 @@ import androidx.compose.ui.unit.sp
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 
@@ -38,6 +40,8 @@ import com.example.prayerapp.ui.theme.PrayerAppTheme
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
@@ -45,16 +49,24 @@ class MainActivity : ComponentActivity() {
     fun getData() {
         val client = SalahClient().getApi().build().create(PrayerApiService::class.java)
         client.getSalah().enqueue(object: Callback<PrayerApiResponse> {
-            override fun onResponse(call: Call<PrayerApiResponse>, response: Response<PrayerApiResponse>) {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(
+                call: Call<PrayerApiResponse>,
+                response: Response<PrayerApiResponse>
+            ) {
+                val data = response.body()
+                data?.let {
+                    Log.d(TAG, "fajr: ${data.times["2025-07-31"]?.fajr}")
+                    Log.d(TAG, "dhuhr: ${data.times["2025-07-31"]?.dhuhr}")
+                    Log.d(TAG, "asr: ${data.times["2025-07-31"]?.asr}")
+                    Log.d(TAG, "maghrib: ${data.times["2025-07-31"]?.magrib}")
+                    Log.d(TAG, "isha: ${data.times["2025-07-31"]?.isha}")
 
-                response?.let {
-                    Log.d(TAG, "response: ${response}")
                 }
             }
 
             override fun onFailure(call: Call<PrayerApiResponse>, t: Throwable) {
-                Log.d(TAG, "faield", t)
-                Log.d(TAG, "Raw Response: ${t}")
+                Log.d(TAG, "failure")
             }
 
         })
@@ -71,7 +83,6 @@ class MainActivity : ComponentActivity() {
         getData()
     }
 }
-
 
 
 @Composable
