@@ -54,12 +54,11 @@ class MainActivity : ComponentActivity() {
             ) {
                 val data = response.body()
                 data?.let {
-                    Log.d(TAG, "fajr: ${data.times["2025-07-31"]?.fajr}")
-                    Log.d(TAG, "dhuhr: ${data.times["2025-07-31"]?.dhuhr}")
-                    Log.d(TAG, "asr: ${data.times["2025-07-31"]?.asr}")
-                    Log.d(TAG, "maghrib: ${data.times["2025-07-31"]?.magrib}")
-                    Log.d(TAG, "isha: ${data.times["2025-07-31"]?.isha}")
-
+                    Log.d(TAG, "fajr: ${data.data.timings.Fajr}")
+                    Log.d(TAG, "dhuhr: ${data.data.timings.Dhuhr}")
+                    Log.d(TAG, "asr: ${data.data.timings.Asr}")
+                    Log.d(TAG, "maghrib: ${data.data.timings.Maghrib}")
+                    Log.d(TAG, "isha: ${data.data.timings.Isha}")
                 }
             }
 
