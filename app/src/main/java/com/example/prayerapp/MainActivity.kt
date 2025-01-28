@@ -40,8 +40,6 @@ import com.example.prayerapp.ui.theme.PrayerAppTheme
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
@@ -64,8 +62,10 @@ class MainActivity : ComponentActivity() {
 
                 }
             }
-            }
 
+            override fun onFailure(call: Call<PrayerApiResponse>, t: Throwable) {
+                Log.d(TAG, "FAIL")
+            }
         })
     }
 
