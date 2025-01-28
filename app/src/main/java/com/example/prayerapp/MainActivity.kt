@@ -64,9 +64,6 @@ class MainActivity : ComponentActivity() {
 
                 }
             }
-
-            override fun onFailure(call: Call<PrayerApiResponse>, t: Throwable) {
-                Log.d(TAG, "failure")
             }
 
         })
