@@ -30,7 +30,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -120,11 +122,12 @@ fun AnnotatedCircle(
 @Composable
 fun MyScreen() {
     val backgroundColor = Color(16, 17, 17)
-
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .background(backgroundColor)
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .padding(50.dp, 1.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
