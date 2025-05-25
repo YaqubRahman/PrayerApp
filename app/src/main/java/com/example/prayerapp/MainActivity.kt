@@ -42,6 +42,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -55,6 +56,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private const val TAG = "MainActivity"
+private var fajrTime = mutableStateOf("Fajr: --:--")
+private var dhuhrTime = mutableStateOf("Dhuhr: --:--")
+private var asrTime = mutableStateOf("Asr: --:--")
+private var maghribTime = mutableStateOf("Maghrib: --:--")
+private var ishaTime = mutableStateOf("Isha: --:--")
+
 class MainActivity : ComponentActivity() {
 
     fun getData() {
@@ -67,6 +74,12 @@ class MainActivity : ComponentActivity() {
             ) {
                 val data = response.body()
                 data?.let {
+                    fajrTime.value = "Fajr: ${data.data.timings.Fajr}"
+                    dhuhrTime.value = "Dhuhr: ${data.data.timings.Dhuhr}"
+                    asrTime.value = "Asr: ${data.data.timings.Asr}"
+                    maghribTime.value = "Maghrib: ${data.data.timings.Maghrib}"
+                    ishaTime.value = "Isha: ${data.data.timings.Isha}"
+
                     Log.d(TAG, "fajr: ${data.data.timings.Fajr}")
                     Log.d(TAG, "dhuhr: ${data.data.timings.Dhuhr}")
                     Log.d(TAG, "asr: ${data.data.timings.Asr}")
@@ -162,23 +175,24 @@ class MainActivity : ComponentActivity() {
                 .background(backgroundColor)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(50.dp, 1.dp),
+                .padding(paddingValues)
+                .padding(horizontal = 16.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AnnotatedCircle(modifier = Modifier.size(400.dp))
             Spacer(modifier = Modifier.size(16.dp))
-            MyBox1()
+            MyBox1(time = dhuhrTime.value)
             Spacer(modifier = Modifier.size(16.dp))
-            MyBox2()
+            MyBox2(time = asrTime.value)
             Spacer(modifier = Modifier.size(16.dp))
-            MyBox3()
+            MyBox3(time = maghribTime.value)
             Spacer(modifier = Modifier.size(16.dp))
-            MyBox4()
+            MyBox4(time = ishaTime.value)
         }
     }
 
     @Composable
-    fun MyBox1() {
+    fun MyBox1(time: String) {
         val customWhite = Color(255, 122, 125, 255)
         Box(
             modifier = Modifier
@@ -198,7 +212,7 @@ class MainActivity : ComponentActivity() {
 
 
             Text(
-                text = "Dhur:12:18",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -209,7 +223,7 @@ class MainActivity : ComponentActivity() {
             )
 
             Text(
-                text = "Dhur:12:18",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 color = customWhite,
@@ -220,7 +234,7 @@ class MainActivity : ComponentActivity() {
 
 
     @Composable
-    fun MyBox2() {
+    fun MyBox2(time: String) {
         val customColor = Color(27, 69, 27, 255)
         val customWhite = Color(255, 122, 125, 255)
         Box(
@@ -241,7 +255,7 @@ class MainActivity : ComponentActivity() {
 
 
             Text(
-                text = "Asr:14:15",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -252,7 +266,7 @@ class MainActivity : ComponentActivity() {
             )
 
             Text(
-                text = "Asr:14:15",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 color = customWhite,
@@ -264,7 +278,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun MyBox3() {
+    fun MyBox3(time: String) {
         val customColor = Color(27, 69, 27, 255)
         val customWhite = Color(255, 122, 125, 255)
         Box(
@@ -286,7 +300,7 @@ class MainActivity : ComponentActivity() {
 
 
             Text(
-                text = "Maghrib:16:43",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -297,7 +311,7 @@ class MainActivity : ComponentActivity() {
             )
 
             Text(
-                text = "Maghrib:16:43",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 color = customWhite,
@@ -309,7 +323,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun MyBox4() {
+    fun MyBox4(time: String) {
         val customColor = Color(27, 69, 27, 255)
         val customWhite = Color(255, 122, 125, 255)
         Box(
@@ -331,7 +345,7 @@ class MainActivity : ComponentActivity() {
 
 
             Text(
-                text = "Isha:18:20",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -342,7 +356,7 @@ class MainActivity : ComponentActivity() {
             )
 
             Text(
-                text = "Isha:18:20",
+                text = time,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
                 color = customWhite,
